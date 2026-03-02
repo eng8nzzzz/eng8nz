@@ -1,119 +1,76 @@
 <!DOCTYPE html>
-
 <html lang="th">
-
 <head>
-
 <meta charset="UTF-8" />
-
-<title>en_g8nz </title>
-
+<title>en_g8nz</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet" />
-
 <link rel="stylesheet" href="style.css" />
-
 </head>
 
 <body>
 
-
-
 <header>
-
-<div class="main-title">en_g8nz</div>
-
-<div class="sub-title">AReng8nz(AR)</div>
-
+  <div class="main-title">en_g8nz</div>
+  <div class="sub-title">AReng8nz(AR)</div>
 </header>
 
-
-
-<!-- AReng8nz -->
-
+<!-- AR Section -->
 <div class="ar-section">
+  <div class="head-title">Mingpu</div>
+  <div class="sub-title">Concept design from oc avatar</div>
 
-<div class="head-title">Mingpu</div>
+  <model-viewer
+      id="model1"
+      src="AR.glb"
+      ios-src="AR.usdz"
+      ar
+      ar-modes="scene-viewer webxr quick-look"
+      camera-controls
+      autoplay
+      auto-rotate
+      shadow-intensity="1"
+      shadow-softness="1"
+      environment-image="neutral"
+      loading="eager"
+      reveal="auto"
+      style="width: 100%; height: 400px;">
+  </model-viewer>
 
-<div class="sub-title">Concept design from oc avatar</div>
-
-<model-viewer id="model1"
-
-     src=“AR.glb"
-
-     ios-src=“AR.usdz"
-
-     ar
-
-     ar-modes="scene-viewer webxr quick-look"
-
-     camera-controls
-
-     autoplay
-
-     auto-rotate
-
-     shadow-intensity="1"
-
-     shadow-softness="1"
-
-     environment-image="neutral.hdr"
-
-     loading="eager"
-
-     reveal="auto"
-
-     style="width: 100%; height: 400px;">
-
-</model-viewer>
-
-<button class="ar-button" onclick="triggerAR('model1')">Play AR</button>
-
+  <button class="ar-button" onclick="triggerAR('model1')">
+    Play AR
+  </button>
 </div>
 
-
-
 <footer>
-
-<div class="footer-link"><strong>Facebook:</strong> <a href="https://www.facebook.com"
-
+  <div class="footer-link">
+    <strong>Facebook:</strong>
+    <a href="https://www.facebook.com" target="_blank">
+      Facebook Page
+    </a>
+  </div>
 </footer>
 
-
-
-<!-- ✅ โหลด model-viewer หลังสุดเพื่อให้โหลดหน้าเว็บเร็วขึ้น -->
-
+<!-- Load model-viewer -->
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-
-
-<!-- ✅ Script ปุ่ม Play AR พร้อม catch error -->
-
 <script>
+function triggerAR(id) {
+  const viewer = document.getElementById(id);
 
-   function triggerAR(id) {
+  if (!viewer) return;
 
-     const viewer = document.getElementById(id);
-
-     if (viewer && viewer.activateAR) {
-
-       viewer.activateAR().catch((error) => {
-
-         alert("AR ไม่พร้อมบนอุปกรณ์นี้ หรือถูกบล็อกโดย browser\n(แนะนำให้กดปุ่ม AR บนมุมขวาของโมเดลแทน)");
-
-         console.warn("activateAR failed:", error);
-
-       });
-
-     }
-
-   }
-
+  if (viewer.canActivateAR) {
+    viewer.activateAR().catch((error) => {
+      alert("AR ไม่พร้อมบนอุปกรณ์นี้\nลองกดปุ่ม AR บนมุมขวาของโมเดลแทน");
+      console.warn("activateAR failed:", error);
+    });
+  } else {
+    alert("อุปกรณ์หรือ browser นี้ไม่รองรับ AR");
+  }
+}
 </script>
 
-
-
 </body>
-
 </html>
